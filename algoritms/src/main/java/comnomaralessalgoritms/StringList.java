@@ -1,5 +1,6 @@
 package comnomaralessalgoritms;
 
+
 public interface StringList {
     String add(String elements);
 

@@ -1,5 +1,6 @@
 package comnomaralessalgoritms;
 
+
 public class CustomException extends RuntimeException {
     public static <T> T nullException(T item) {
         if (item == null) {

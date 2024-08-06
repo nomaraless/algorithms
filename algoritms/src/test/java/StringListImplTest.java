@@ -121,14 +121,14 @@ public class StringListImplTest {
         assertFalse(list.isEmpty());
     }
 
-//    @Test
-//    public void clear() {
-//        list.add("a");
-//        list.add("s");
-//        list.clear();
-//        list.toArray();
-//        assertTrue(list.isEmpty());
-//    }
+    @Test
+    public void clear() {
+        list.add("a");
+        list.add("s");
+        list.clear();
+        list.toArray();
+        assertTrue(list.isEmpty());
+    }
 
     @Test
     public void toArray() {
