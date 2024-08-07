@@ -3,7 +3,7 @@ package comnomaralessalgoritms;
 
 public interface CustomList<T> {
 
-    void sort();
+    void sort(int[] a, int b, int end);
     T add(T elements);
 
     T add(int index, T elements);

@@ -28,16 +28,42 @@ public class CustomListImpl<T extends Comparable<T>> implements CustomList<T> {
         }
     }
 
-    private void sort2() {
-        Arrays.sort(elements, 0, size);
+    private void sort2(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+
+            sort2(arr, begin, partitionIndex - 1);
+            sort2(arr, partitionIndex + 1, end);
+        }
     }
 
-    public void sort() {
-        sort();
+    private static int partition(int[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = (begin - 1);
+
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+
+                swapElements(arr, i, j);
+            }
+        }
+
+        swapElements(arr, i + 1, end);
+        return i + 1;
+    }
+
+    private static void swapElements(int[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
+    public void sort(int[] a, int b, int end) {
+        sort2(a, b, end);
     }
 
     public int binarySearch(T e) {
-        sort();
         int min = 0, max = size - 1;
         while (min <= max) {
             int mid = (min + max) / 2;
