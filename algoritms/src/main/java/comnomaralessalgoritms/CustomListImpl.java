@@ -1,9 +1,11 @@
 package comnomaralessalgoritms;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
-public class StringListImpl implements StringList {
-    private String[] elements;
+public class CustomListImpl<T extends Comparable<T>> implements CustomList<T> {
+    private T[] elements;
     private int size = 0;
 
     public void indexOut(int index) {
@@ -11,30 +13,57 @@ public class StringListImpl implements StringList {
             throw new IndexOutOfBoundsException();
         }
     }
-    public StringListImpl(int initialCapacity) {
+
+    public CustomListImpl(int initialCapacity) {
         if (initialCapacity <= 0) {
             throw new IllegalArgumentException();
         }
-        elements = new String[initialCapacity];
+        elements = (T[]) new Comparable[initialCapacity];
     }
 
     private void growSize() {
         if (elements.length == size) {
             elements = Arrays.copyOf(elements, (elements.length + elements.length / 2));
+            List<String> a = new ArrayList<>();
         }
     }
 
+    private void sort2() {
+        Arrays.sort(elements, 0, size);
+    }
+
+    public void sort() {
+        sort();
+    }
+
+    public int binarySearch(T e) {
+        int min = 0, max = size - 1;
+        while (min <= max) {
+            int mid = (min + max) / 2;
+            T mValue = elements[mid];
+            int compare = mValue.compareTo(e);
+            if (compare < 0) {
+                min = mid + 1;
+            } else if (compare > 0) {
+                max = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
     @Override
-    public String add(String e) {
+    public T add(T e) {
         CustomException.nullException(e);
         growSize();
         elements[size] = e;
         size++;
-        return e;
+        return (T) e;
     }
 
     @Override
-    public String add(int index, String e) {
+    public T add(int index, T e) {
         CustomException.nullException(e);
         indexOut(index);
         growSize();
@@ -43,28 +72,28 @@ public class StringListImpl implements StringList {
         }
         elements[index] = e;
         size++;
-        return e;
+        return (T) e;
     }
 
     @Override
-    public String set(int index, String e) {
+    public T set(int index, T e) {
         CustomException.nullException(e);
         indexOut(index);
         elements[index] = e;
-        return e;
+        return (T) e;
     }
 
     @Override
-    public String remove(String e) {
+    public T remove(T e) {
         CustomException.nullException(e);
         int i = indexOf(e);
-        return remove(i);
+        return (T) remove(i);
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         indexOut(index);
-        String a = elements[index];
+        T a = elements[index];
         for (int i = index; i < size - 1; i++) {
             elements[i] = elements[i + 1];
         }
@@ -73,23 +102,23 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public boolean contains(String e) {
-        return indexOf(e) >=0;
+    public boolean contains(T e) {
+        return indexOf(e) >= 0;
     }
 
     @Override
-    public int indexOf(String e) {
+    public int indexOf(T e) {
         for (int i = 0; i < elements.length; i++) {
-                if (e.equals(elements[i]))
-                    return i;
+            if (e.equals(elements[i]))
+                return i;
         }
         return -1;
 
     }
 
     @Override
-    public int lastIndexOf(String e) {
-        for (int i = size-1; i >=0 ; i--) {
+    public int lastIndexOf(T e) {
+        for (int i = size - 1; i >= 0; i--) {
             if (e.equals(elements[i]))
                 return i;
         }
@@ -97,13 +126,13 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String get(int index) {
+    public T get(int index) {
         indexOut(index);
-            return elements[index];
+        return elements[index];
     }
 
     @Override
-    public boolean equals(StringList otherList) {
+    public boolean equals(CustomList<T> otherList) {
         CustomException.nullException(otherList);
         if (this == otherList) {
             return true;
@@ -135,7 +164,7 @@ public class StringListImpl implements StringList {
     }
 
     @Override
-    public String[] toArray() {
+    public T[] toArray() {
         return Arrays.copyOf(elements, size);
     }
 }
