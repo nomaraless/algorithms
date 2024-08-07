@@ -37,6 +37,7 @@ public class CustomListImpl<T extends Comparable<T>> implements CustomList<T> {
     }
 
     public int binarySearch(T e) {
+        sort();
         int min = 0, max = size - 1;
         while (min <= max) {
             int mid = (min + max) / 2;
